@@ -1,6 +1,6 @@
 # grunt-pakit
 
-> grunt plugin for pakit
+> grunt plugin for [pakit](https://github.com/MiguelCastillo/pakit)
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
