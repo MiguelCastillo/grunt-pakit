@@ -6,45 +6,36 @@
  * Licensed under the MIT license.
  */
 
-'use strict';
+var pakit = require('pakit');
 
 module.exports = function(grunt) {
+  function logError(err) {
+    var errStr = err && err.stack || err;
+    grunt.log.error(errStr);
+    return err;
+  }
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+  grunt.registerMultiTask('pakit', 'grunt plugin for pakit', function() {
+    var settings = Object.assign({ files: [] }, this.options(), this.data);
+    var files = this.files && this.files.length ? this.files : settings.files;
+    var done = this.async();
 
-  grunt.registerMultiTask('pakit', 'The best Grunt plugin ever.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
-    });
-
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
-
-      // Handle options.
-      src += options.punctuation;
-
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
-
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
+    try {
+      Promise
+        .all(files.map(function(file) {
+          return pakit({
+            src: file.src,
+            dest: file.dest
+          }, settings);
+        }))
+        .then(function() {
+          if (!settings.watch) {
+            done();
+          }
+        }, logError);
+    }
+    catch(err) {
+      logError(err);
+    }
   });
-
 };
