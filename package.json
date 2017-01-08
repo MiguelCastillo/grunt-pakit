@@ -30,12 +30,12 @@
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-nodeunit": "^1.0.0",
-    "grunt": "~1.0.1"
+    "grunt": "~1.0.1",
+    "pakit": "^0.3.0"
   },
   "keywords": [
     "gruntplugin"
   ],
   "dependencies": {
-    "pakit": "~0.2.1"
   }
 }
