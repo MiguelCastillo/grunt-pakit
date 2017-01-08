@@ -1,7 +1,7 @@
 {
   "name": "grunt-pakit",
   "description": "The best Grunt plugin ever.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "https://github.com/MiguelCastillo/grunt-pakit",
   "author": {
     "name": "Miguel Castillo",
@@ -36,6 +36,5 @@
   "keywords": [
     "gruntplugin"
   ],
-  "dependencies": {
-  }
+  "dependencies": {}
 }
